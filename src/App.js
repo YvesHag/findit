@@ -54,8 +54,8 @@ function App() {
   return (
     <div className="App">
  
-     <LearnD3></LearnD3>
-    {/* <Geolocation></Geolocation> */}
+     {/* <LearnD3></LearnD3> */}
+    <Geolocation></Geolocation>
       {/* <LayoutCanvasB></LayoutCanvasB> */}
     
     </div>
