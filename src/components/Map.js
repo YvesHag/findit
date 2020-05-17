@@ -21,7 +21,8 @@ class Map extends Component {
               <button onClick={resetTransform}>x</button>
             </div>
             <TransformComponent>
-              <img src={worldmap} />
+               {/* <img src={worldmap}  />  */}
+              <img x="0" y="0" height="400" width="600" src="http://www.reqssolutions.com/wp-content/uploads/2019/03/Quality.jpg"></img>
             </TransformComponent>
           </React.Fragment>
         )}

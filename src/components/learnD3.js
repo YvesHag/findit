@@ -1,18 +1,28 @@
 import React, { PureComponent } from 'react'
 import * as d3 from 'd3'
 import Data from '../data/data'
-import BisElKasten from '../data/locations_BIS_el_cabinets'
+import BisElKasten from '../data/locations_BIS_el_cabinets.json'
+import { Stage } from './Stage';
+import { ZoomContainer } from './ZoomContainer'
+import pfizer from '../img/huisLayout.png'
+
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import AddBisElModal from './addBisElModal'
+
+import Background from "./Map"
+
+
 class LearnD3 extends PureComponent {
 
     constructor(props) {
         super(props);
         this.state = {
+            pfizerLayout: pfizer,
             barChart: Data,
             bisElKasten: BisElKasten,
-            cabinetX:"",
-            cabinetY:"",
-            toggleModalOpen :false
+            cabinetX: "",
+            cabinetY: "",
+            toggleModalOpen: false
         };
 
         console.log(this.state.conva)
@@ -23,22 +33,36 @@ class LearnD3 extends PureComponent {
     }
 
     drawBisElKabinets(data) {
-        const canvasHeight = 400
-        const canvasWidth = 600
-        const svgCanvas = d3.select(this.refs.canvas)
+/* 
+         const  height = this.state.pfizerLayout.offsetHeight
+        const width  =window.innerWidth ;
+        console.log(height+"  "+width)  */
+        const canvasWidth = 497//document.body.clientWidth / 2
+        const canvasHeight =1132/2 //window.innerHeight / 2
+        const svgCanvas = d3.select(this.refs.canvasBIScabinets)
+
             .append("svg")
             .attr('id', "BIS_el_cabinets")
             .attr('xmlns', "http://www.w3.org/2000/svg")
             .attr("width", canvasWidth)
             .attr("height", canvasHeight)
-            .style("border", "1px solid black")
-            .style("fill", "red")
+            .style("border", "3px solid red")
+            .call(d3.zoom().on("zoom", function () {
+                svgCanvas.attr("transform", d3.event.transform)
+             }))
+             .append("g")
+
+        svgCanvas.append("image")
+            .attr("xlink:href", this.state.pfizerLayout)// this.state.bisElKasten.bk[0]  of this.state.pfizerLayout
+            .attr("width", canvasWidth)
+            .attr("height", canvasHeight)
+
         svgCanvas.selectAll("rect")
-            .data(data).enter()
+            .data(data.points).enter()
             .append("rect")
             .attr("width", 20)
             .attr("height", 20)
-            .attr("fill", "orange")
+            .attr("fill", "red")
             .attr("x", (datapoint, iteration) => datapoint.cx)
             .attr("y", (datapoint) => datapoint.cy)
             .append("title")
@@ -46,11 +70,11 @@ class LearnD3 extends PureComponent {
     }
 
     add_BIS_el_cabinet = () => {
-
+        console.log(this.state.bisElKasten)
         var
             svg = document.getElementById('BIS_el_cabinets'),
             NS = svg.getAttribute('xmlns');
-        svg.addEventListener('click', function (e) {
+         svg.addEventListener('click', function (e) {
             var
                 t = e.target,
                 x = e.clientX,
@@ -65,24 +89,15 @@ class LearnD3 extends PureComponent {
             target.appendChild(circle);
 
             this.setState({
-                cabinetX: svgP.x, 
+                cabinetX: svgP.x,
                 cabinetY: svgP.y,
-            }, ()=>{
+            }, () => {
                 this.showToggleModal()
+                console.log(this.state.cabinetX, this.state.cabinetY)
             })
 
+            return (svgP.x, svgP.y)
 
-            /* newCabinet = document.createElementNS(NS, 'rect');
-            newCabinet.setAttributeNS(null, 'x', Math.round(svgP.x));
-            newCabinet.setAttributeNS(null, 'y', Math.round(svgP.y));
-            newCabinet.setAttributeNS(null, 'width', 10);
-            newCabinet.setAttributeNS(null, 'height', 10);
-            target.appendChild(newCabinet); */
-
-           /*   */
-
-            return(svgP.x, svgP.y)
-            
         }.bind(this), false);
         // translate page to SVG co-ordinate
         function svgPoint(element, x, y) {
@@ -117,47 +132,60 @@ class LearnD3 extends PureComponent {
         theNode.style("opacity", "0");
     }
 
-    showToggleModal=() =>{
-        console.log("dddd")
+    showToggleModal = () => {
         this.setState({
-            toggleModalOpen :!this.state.toggleModalOpen
-            }, ()=>{
-                var newElCabinet = {
-                    id: "EL08888",
-                    name: "bis kast new",
-                    PLC: "5120",
-                    cx: this.state.cabinetX,
-                    cy: this.state.cabinetY,
-                    level: 1,
-                }
-                this.setState(prevState => ({
-                    bisElKasten: [...prevState.bisElKasten, newElCabinet]
-                }), () => {
-                    //deleting the svg and reloding it with new added items
-                    d3.selectAll('svg').remove()
-                   this.drawBisElKabinets(this.state.bisElKasten)
-                })
-            }, ()=>{
-                
+            toggleModalOpen: !this.state.toggleModalOpen
+        }, () => {
+            var newElCabinet = {
+                id: "EL08888",
+                name: "bis kast new",
+                PLC: "5120",
+                cx: this.state.cabinetX,
+                cy: this.state.cabinetY,
+                level: 1,
             }
+            this.setState(prevState => ({
+                ...prevState, bisElKasten: {
+                    ...prevState.bisElKasten, points: [...prevState.bisElKasten.points, newElCabinet]
+                }
+            }), () => {
+                //deleting the svg and reloding it with new added items
+                d3.selectAll('svg').remove()
+                this.drawBisElKabinets(this.state.bisElKasten)
+            })
+        }, () => {
+
+        }
         )
     }
 
+
     render() {
+
+        console.log(this.state.bisElKasten.points)
+
         return (
-            <div>
+            <div >
 
-                <div>{this.state.test}</div>
-                <div ref="canvas"></div>
-                <input id="targetNode" name="targetNode" type="text" />
-                <button onClick={this.hideItems} >show One</button>
-                <button onClick={this.showAll} >show all</button>
-                <button onClick={this.hideAll} >hide all</button>
-                <button onClick={(event) => { this.add_BIS_el_cabinet(event) }} >Add Element Mode</button>
-                <br></br>
-                <AddBisElModal toggleModalOpen={this.state.toggleModalOpen} toggleModal={this.showToggleModal}></AddBisElModal>
+                
+                <div className="row bg-dark container_canvas" >
+                    <div ref="canvasBIScabinets" className="col-6  BIS_Canvas" style={{ backgroundColor: 'rgb(255,255,255)' }}></div>
+                </div>
 
-            </div>
+                <p></p>
+                <div className="row" style={{ backgroundColor: 'rgb(0,99,117)' }}>
+                    <input id="targetNode" name="targetNode" type="text" />
+                    <button onClick={this.hideItems} >show One</button>
+                    <button onClick={this.showAll} >show all</button>
+                    <button onClick={this.hideAll} className='testbtn'>hide all</button>
+                    <button onClick={(event) => { this.add_BIS_el_cabinet(event) }} >Add Element Mode</button>
+                    <br></br>
+                </div>
+
+                {/* <img src={this.state.pfizerLayout}></img> */}
+                {/* <AddBisElModal toggleModalOpen={this.state.toggleModalOpen} toggleModal={this.showToggleModal}></AddBisElModal> */}
+
+            </div >
         )
     }
 }

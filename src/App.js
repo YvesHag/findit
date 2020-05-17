@@ -1,6 +1,10 @@
 import React from 'react';
+import './App.css';
 import LearnD3 from './components/learnD3'
 import Geolocation from './components/geolocation'
+import LayoutCanvas from './components/LayoutCanvas'
+import LayoutCanvasB from './components/LayoutCanvasB'
+import pfizer from "./img/pfizer.png"
 
 function App() {
 
@@ -50,8 +54,10 @@ function App() {
   return (
     <div className="App">
  
-    <LearnD3></LearnD3>
-    <Geolocation></Geolocation>
+     <LearnD3></LearnD3>
+    {/* <Geolocation></Geolocation> */}
+      {/* <LayoutCanvasB></LayoutCanvasB> */}
+    
     </div>
   );
 }
