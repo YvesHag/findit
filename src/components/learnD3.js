@@ -181,6 +181,8 @@ class LearnD3 extends PureComponent {
                     <button onClick={(event) => { this.add_BIS_el_cabinet(event) }} >Add Element Mode</button>
                     <br></br>
                 </div>
+                  <p>coord X: {this.state.cabinetX}</p>
+                  <p>coord Y: {this.state.cabinetY}</p>
 
                 {/* <img src={this.state.pfizerLayout}></img> */}
                 {/* <AddBisElModal toggleModalOpen={this.state.toggleModalOpen} toggleModal={this.showToggleModal}></AddBisElModal> */}
