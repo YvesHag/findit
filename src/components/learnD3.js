@@ -37,8 +37,8 @@ class LearnD3 extends PureComponent {
          const  height = this.state.pfizerLayout.offsetHeight
         const width  =window.innerWidth ;
         console.log(height+"  "+width)  */
-        const canvasWidth = 497//document.body.clientWidth / 2
-        const canvasHeight =1132/2 //window.innerHeight / 2
+        const canvasWidth = document.body.clientWidth / 2   //497 huis X
+        const canvasHeight =window.innerHeight / 2    //1132 huis Y
         const svgCanvas = d3.select(this.refs.canvasBIScabinets)
 
             .append("svg")
