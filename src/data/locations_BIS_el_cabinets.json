@@ -5,8 +5,8 @@
         "id": "EL02698",
         "name": "bis kast Xalatan",
         "PLC": "5101",
-        "cx": 133,
-        "cy": 9,
+        "cx": 0,
+        "cy": 0,
         "level": 0
 
     },
@@ -14,31 +14,31 @@
         "id": "EL54526",
         "name": "bis kast Macugen",
         "PLC": "5104",
-        "cx": 335,
-        "cy": 9,
+        "cx": 9.5,
+        "cy": 0,
         "level": 1
     },
     {
         "id": "EL07858",
         "name": "bis kast Woluwo",
         "PLC": "5127",
-        "cx": 133,
-        "cy": 460,
+        "cx": 0,
+        "cy": 19,
         "level": 1
     }, {
         "id": "EL07858",
         "name": "bis kast Woluwo22",
         "PLC": "5127",
-        "cx": 335,
-        "cy": 460,
+        "cx": 9.5,
+        "cy": 19,
         "level": 1
     },
     {
         "id": "EL45852",
         "name": "bis kast Labo",
         "PLC": "5107",
-        "cx": 239,
-        "cy": 245,
+        "cx": 4.5,
+        "cy": 9.5,
         "level": 0
     }]
 

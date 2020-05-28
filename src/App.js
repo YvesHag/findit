@@ -2,13 +2,13 @@ import React from 'react';
 import './App.css';
 import LearnD3 from './components/learnD3'
 import Geolocation from './components/geolocation'
-import LayoutCanvas from './components/LayoutCanvas'
+/* import LayoutCanvas from './components/LayoutCanvas'
 import LayoutCanvasB from './components/LayoutCanvasB'
-import pfizer from "./img/pfizer.png"
+import pfizer from "./img/pfizer.png" */
 
 function App() {
 
-  function getItemId(e) {
+  /* function getItemId(e) {
 
     var
       svg = document.getElementById('mysvg'),
@@ -40,24 +40,30 @@ function App() {
       return pt.matrixTransform(element.getScreenCTM().inverse());
     }
 
-  }
+  } */
 
-  function dispalyObjectId() {
+ /*  function dispalyObjectId() {
     var SVG = document.getElementsByTagName('svg')[0];
     var children = SVG.childNodes;
 
     console.log(children)
 
   }
-
+ */
 
   return (
     <div className="App">
- 
-     {/* <LearnD3></LearnD3> */}
-    <Geolocation></Geolocation>
+
+      {/*  */}
+      <div className='row'>
+        <div className="col-10 offset-1" ><LearnD3></LearnD3> </div>
+      </div>
+      <div className='row'>
+        <div className="col-10 offset-1" ><Geolocation></Geolocation></div>
+      </div>
+
       {/* <LayoutCanvasB></LayoutCanvasB> */}
-    
+
     </div>
   );
 }
