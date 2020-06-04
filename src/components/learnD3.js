@@ -158,7 +158,7 @@ class LearnD3 extends PureComponent {
 /// In Pic Coordinates this is 593 X 1184 px
 /// --> 1cm = 59.25px = RealityCoefficient
         //const realityCoefficient = 59.25
-        const canvasWidth =window.innerWidth / 2   //497 huis X
+        const canvasWidth =window.innerWidth   //497 huis X
         const canvasHeight = window.innerHeight / 2    //1132 huis Y
         const svgCanvas = d3.select(this.refs.canvasBIScabinets)
 
