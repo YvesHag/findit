@@ -2,7 +2,9 @@ import React, { PureComponent } from 'react'
 import * as d3 from 'd3'
 import Data from '../data/data'
 import BisElKasten from '../data/locations_BIS_el_cabinets.json'
-import pfizer from '../img/huisLayoutB.png'
+//import pfizer from '../img/footballfield.png'
+import pfizer from '../img/pfizerPlant.jpg'
+import projector from 'ecef-projector'
 ////import AddBisElModal from './addBisElModal'
 //import Background from "./Map"
 
@@ -15,17 +17,24 @@ class LearnD3 extends PureComponent {
             pfizerLayout: pfizer,
             barChart: Data,
             bisElKasten: BisElKasten,
-            layoutWidth: "",
-            layoutHeight: "",
+            layoutWidth: 0,
+            layoutHeight: 0,
             canvasImageLayoutRatioX: 1.885,
             canvasImageLayoutRatioY: 0.6678,
             realityCoefficient : 59.25, // 1cm in reality = 59.25px
-            xStartingPoint:"",
-            yStartingPoint:"",
-            cabinetX: "",
-            cabinetY: "",
-            toggleModalOpen: false
-        };
+            xStartingPoint:0,
+            yStartingPoint:0,
+            cabinetX: 0,
+            cabinetY: 0,
+            toggleModalOpen: false,
+            p1x:50.971009,
+            p1y:4.447327,            
+            p2x:50.971626,
+            p2y:4.448464,            
+            p3x:50.971182,
+            p3y:4.449074,            
+            p4x:50.970564,
+            p4y:4.447938,        };
     }
 
     componentWillMount(){
@@ -34,7 +43,77 @@ class LearnD3 extends PureComponent {
 
     componentDidUpdate(){
         this.drawBisElKabinets(this.state.bisElKasten)
+        
+        /* let X1=this.distanceInKmBetweenEarthCoordinates(0, 0, 50.971009,0)
+        let Y1=this.distanceInKmBetweenEarthCoordinates(0, 0, 0,4.447327)
+        let XY1=this.distanceInKmBetweenEarthCoordinates(0, 0, 50.971009,4.447327)
+        console.log("Point 1: ", X1, Y1, XY1)
+        let X2=this.distanceInKmBetweenEarthCoordinates(0, 0, 50.971626,0)
+        let Y2=this.distanceInKmBetweenEarthCoordinates(0, 0, 0,4.448464)
+        let XY2=this.distanceInKmBetweenEarthCoordinates(0, 0, 50.971626,4.448464)
+        console.log("Point 2: ", X2, Y2, XY2)
+        let AB  =this.distanceInKmBetweenEarthCoordinates(50.971009,4.447327,50.971626,4.448464)
+        console.log("DISTANCE BETWEEN 1 EN 2: ",AB)
+
+        let calculatedDistance= Math.sqrt(((X2-X1)*(X2-X1))+((Y2-Y1)*(Y2-Y1)))
+        console.log("Calculated DISTANCE BETWEEN 1 EN 2: ",calculatedDistance) */
+        let p1x = 50.971009
+        let p1y = 4.447327
+        let p2x = 50.971626
+        let p2y = 4.448464
+        let p3x = 50.971182
+        let p3y = 4.449074
+        let p4x = 50.970564
+        let p4y = 4.447938
+
+        let x1 = this.distanceInKmBetweenEarthCoordinates(0,0,p1x,p1y)
+        let y1 = this.distanceInKmBetweenEarthCoordinates(0,0,0,p1y)
+        let y3 = this.distanceInKmBetweenEarthCoordinates(0,0,0,p3y)
+      //console.log("----------------distance from 1 to 3:", x1) 
+     // console.log("distance from 1y to 3y:", (y3-y1)*1000) 
+        
+
+
+
+      /*   let Tx = (xL2-xL1) / 712; //[lat / px]
+        let Ty = (yL2-yL3) / 688; //[long/px]
+
+        let Hc = 479.5
+        let Wc = 675
+        let WidthnewIm =this.state.canvasImageLayoutRatioY*this.state.layoutWidth
+        
+        let Yjcp = Hc / 2;
+        let Xicp = Wc/2 - this.state.xStartingPoint
+        
+        let Ypos1 = (Hc - Yjcp) / Ty
+        let Xpos1 = Xicp / Tx
+        
+        let yCoord = xL4 + Ypos1
+        let xCoord = yL4 + Xpos1
+
+ */
+
+        
     }
+
+    degreesToRadians(degrees) {
+        return degrees * Math.PI / 180;
+      }
+      
+    distanceInKmBetweenEarthCoordinates(lat1, lon1, lat2, lon2) {
+        var earthRadiusKm = 6371;
+      
+        var dLat = this.degreesToRadians(lat2-lat1);
+        var dLon = this.degreesToRadians(lon2-lon1);
+      
+        lat1 = this.degreesToRadians(lat1);
+        lat2 = this.degreesToRadians(lat2);
+      
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+        return earthRadiusKm * c;
+      }
 
     getImageDimensions() {
         let layoutWidth='';
@@ -58,7 +137,9 @@ class LearnD3 extends PureComponent {
                 layoutHeight: img.height,
                 canvasImageLayoutRatioX: (window.innerWidth/2)/img.width,
                 canvasImageLayoutRatioY: (window.innerHeight / 2)/img.height,
-                xStartingPoint: xStartingPoint
+                xStartingPoint,
+                canvasWidth:  window.innerWidth/2,
+                canvasHeight: window.innerHeight/2,
             })
             console.log("canvasWidth: ", window.innerWidth/2, "---image width: ", this.state.layoutWidth, "----Xratio: ", this.state.canvasImageLayoutRatioX)
             console.log("canvasHeight: ", window.innerHeight/2, "---image height: ", this.state.layoutHeight, "----Yratio: ", this.state.canvasImageLayoutRatioY)
@@ -112,7 +193,7 @@ class LearnD3 extends PureComponent {
     }
 
     add_BIS_el_cabinet = () => {
-        console.log(this.state.bisElKasten)
+        //console.log(this.state.bisElKasten)
         let realityCoordinateX=""
         let realityCoordinateY=""
         
@@ -137,11 +218,11 @@ class LearnD3 extends PureComponent {
         realityCoordinateY= (svgP.y)/(this.state.realityCoefficient*this.state.canvasImageLayoutRatioY)
             
         this.setState({
-                cabinetX: realityCoordinateX, //svgP.x,//*this.state.canvasImageLayoutRatioX,
-                cabinetY: realityCoordinateY //svgP.y,//*this.state.canvasImageLayoutRatioY,
+                cabinetX: svgP.x,//realityCoordinateX, //svgP.x,//*this.state.canvasImageLayoutRatioX,
+                cabinetY: svgP.y//realityCoordinateY //svgP.y,//*this.state.canvasImageLayoutRatioY,
             }, () => {
                 this.showToggleModal()
-                console.log(this.state.cabinetX, this.state.cabinetY)
+                //console.log(this.state.cabinetX, this.state.cabinetY)
             })
 
             return (svgP.x, svgP.y)
@@ -217,8 +298,8 @@ class LearnD3 extends PureComponent {
             <div >
 
 
-                <div className="row bg-dark container_canvas" >
-                    <div ref="canvasBIScabinets" className="col-6  BIS_Canvas" style={{ backgroundColor: 'rgb(255,255,255)' }}></div>
+                <div className="row container_canvas" >
+                    <div ref="canvasBIScabinets" className="col-6  BIS_Canvas" ></div>
                 </div>
 
                 <p></p>

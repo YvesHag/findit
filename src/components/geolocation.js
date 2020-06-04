@@ -55,6 +55,7 @@ import { geolocated } from "react-geolocated";
  
 class Demo extends React.Component {
     render() {
+       // console.log ("Altitude",this.props.coords)
         return !this.props.isGeolocationAvailable ? (
             <div>Your browser does not support Geolocation</div>
         ) : !this.props.isGeolocationEnabled ? (

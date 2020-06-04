@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css';
 import LearnD3 from './components/learnD3'
 import Geolocation from './components/geolocation'
+import Lieflet from './components/leaflet'
+import LiefletAndD3 from './components/leafletAndD3'
 /* import LayoutCanvas from './components/LayoutCanvas'
 import LayoutCanvasB from './components/LayoutCanvasB'
 import pfizer from "./img/pfizer.png" */
@@ -54,10 +56,22 @@ function App() {
   return (
     <div className="App">
 
-      {/*  */}
-      <div className='row'>
+     
+     <div className='row'>
         <div className="col-10 offset-1" ><LearnD3></LearnD3> </div>
+      </div> 
+      
+ {/* <div className='row'>
+        <div className="col-10 offset-1"><Lieflet></Lieflet></div>
       </div>
+
+<p></p>
+
+      <div className='row'>
+        <div className="col-10 offset-1"><LiefletAndD3></LiefletAndD3></div>
+      </div> */}
+
+<p></p>
       <div className='row'>
         <div className="col-10 offset-1" ><Geolocation></Geolocation></div>
       </div>
