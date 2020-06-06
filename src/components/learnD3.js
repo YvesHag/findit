@@ -3,7 +3,7 @@ import * as d3 from 'd3'
 import Data from '../data/data'
 import BisElKasten from '../data/locations_BIS_el_cabinets.json'
 //import pfizer from '../img/footballfield.png'
-import pfizer from '../img/pfizerPlant.jpg'
+import pfizer from '../img/pfizerPlant9.jpg'
 import projector from 'ecef-projector'
 ////import AddBisElModal from './addBisElModal'
 //import Background from "./Map"
@@ -128,20 +128,20 @@ class LearnD3 extends PureComponent {
 
             layoutWidth= img.width
             layoutHeight= img.height
-            canvasImageLayoutRatioX= (window.innerWidth/2)/img.width
+            canvasImageLayoutRatioX= (window.innerWidth*0.85)/img.width
             canvasImageLayoutRatioY= (window.innerHeight / 2)/img.height
             xStartingPoint= ((window.innerWidth/2)-(layoutWidth*canvasImageLayoutRatioY))/2
 
             this.setState({
                 layoutWidth: img.width,
                 layoutHeight: img.height,
-                canvasImageLayoutRatioX: (window.innerWidth/2)/img.width,
+                canvasImageLayoutRatioX: (window.innerWidth*0.85)/img.width,
                 canvasImageLayoutRatioY: (window.innerHeight / 2)/img.height,
                 xStartingPoint,
-                canvasWidth:  window.innerWidth/2,
+                canvasWidth:  window.innerWidth*0.85,
                 canvasHeight: window.innerHeight/2,
             })
-            console.log("canvasWidth: ", window.innerWidth/2, "---image width: ", this.state.layoutWidth, "----Xratio: ", this.state.canvasImageLayoutRatioX)
+            console.log("canvasWidth: ", window.innerWidth*0.85, "---image width: ", this.state.layoutWidth, "----Xratio: ", this.state.canvasImageLayoutRatioX)
             console.log("canvasHeight: ", window.innerHeight/2, "---image height: ", this.state.layoutHeight, "----Yratio: ", this.state.canvasImageLayoutRatioY)
             console.log("xOffset: ", this.state.xOffset)
             console.log("new image width: ",this.state.canvasImageLayoutRatioY*this.state.layoutWidth)
@@ -158,7 +158,7 @@ class LearnD3 extends PureComponent {
 /// In Pic Coordinates this is 593 X 1184 px
 /// --> 1cm = 59.25px = RealityCoefficient
         //const realityCoefficient = 59.25
-        const canvasWidth =window.innerWidth   //497 huis X
+        const canvasWidth =window.innerWidth*0.85  //497 huis X
         const canvasHeight = window.innerHeight / 2    //1132 huis Y
         const svgCanvas = d3.select(this.refs.canvasBIScabinets)
 
@@ -299,7 +299,7 @@ class LearnD3 extends PureComponent {
 
 
                 <div className="row container_canvas" >
-                    <div ref="canvasBIScabinets" className="col-6  BIS_Canvas" ></div>
+                    <div ref="canvasBIScabinets" className=" BIS_Canvas" ></div>
                 </div>
 
                 <p></p>
